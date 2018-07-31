@@ -7,9 +7,29 @@
         <meta property="og:description" content="Project π combines Mathematics and the accessibility of social media to create a unique learning experience." />
         <meta property="og:image" content="https://projectpitutoring.github.io/favicon.png" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/yeti/bootstrap.min.css" />
+        <style>
+            div.newJumbotron {
+                background-color: #222f3e;
+                color: #fff;
+                padding: 2.5%;
+            }
+            div.container {
+                margin-top: 2.5%;
+            }
+        </style>
     </head>
     <body>
-        <div class="jumbotron">
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1&appId=1363704637070550&autoLogAppEvents=1';
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="newJumbotron">
             <div class="container">
                 <h1>Project Pi Tutoring</h1>
                 <p>Project π combines Mathematics and the accessibility of social media to create a unique learning experience.</p>
@@ -17,24 +37,36 @@
             </div>
         </div>
         <div class="container">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                    <th scope="col">Type</th>
-                    <th scope="col">Topic</th>
-                    <th scope="col">Sub-Topic</th>
-                    <th scope="col">Download File</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <trc>
-                        <td>Lecture</td>
-                        <td>Arithmetic</td>
-                        <td>Operations on Numbers</td>
-                        <td><a href="/Notes/Arithmetic/Operations-on-numbers/Lecture.pdf"><button class="btn btn-primary">Download File</button></a></td>
-                    </tr>
-                </tbody>
-            </table> 
+            <div class="row">
+                <div class="col-md-8">
+                    <h3>Our File Repository:</h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">Type</th>
+                            <th scope="col">Topic</th>
+                            <th scope="col">Sub-Topic</th>
+                            <th scope="col">Download File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <trc>
+                                <td>Lecture</td>
+                                <td>Arithmetic</td>
+                                <td>Operations on Numbers</td>
+                                <td><a href="/Notes/Arithmetic/Operations-on-numbers/Lecture.pdf"><button class="btn btn-primary">Download File</button></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-4">
+                    <div class="fb-page" data-href="https://www.facebook.com/ProjectPiTutoring" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                        <blockquote cite="https://www.facebook.com/ProjectPiTutoring" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/ProjectPiTutoring">Project Pi</a>
+                        </blockquote>
+                    </div>
+                </div>
+            </div> 
         </div>
     </body>
 </html>

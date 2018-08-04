@@ -1,0 +1,33 @@
+.btn-primary {
+    background-color: #222f3e;
+    border-color: #fff;
+}
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+div.newJumbotron {
+    background-color: #222f3e;
+    color: #fff;
+    padding: 2.5%;
+}
+div.newJumbotron-small {
+    background-color: #222f3e;
+    color: #fff;
+    padding: 1%;
+}
+div.container {
+    margin-top: 2.5%;
+}
+img.logo-small {
+    height: 32px;
+    width: auto;
+}
+img.logo {
+    height: 64px;
+    width: auto;
+    margin-bottom: 2%;
+}
+div.footer {
+    background-color: #222f3e;
+    padding: 2%;
+}

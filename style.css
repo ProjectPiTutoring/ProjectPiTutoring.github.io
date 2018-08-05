@@ -29,5 +29,7 @@ img.logo {
 }
 div.footer {
     background-color: #222f3e;
+    color: #fff;
+    font-size: large;
     padding: 2%;
 }

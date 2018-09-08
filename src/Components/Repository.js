@@ -8,9 +8,9 @@ class Repository extends Component {
         }
     }
     componentDidMount() {
-        fetch('http://projectpi.phillytan.xyz/files').then(results => { return results.json() }).then(data => {
+        fetch('https://projectpi.phillytan.xyz/files').then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
-                let link = "http://projectpi.phillytan.xyz/download/"+item.fileCode;
+                let link = "https://projectpi.phillytan.xyz/download/"+item.fileCode;
                 return (
                 <tr>
                     <td>{item.type}</td>

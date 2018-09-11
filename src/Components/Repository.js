@@ -71,7 +71,7 @@ class Repository extends Component {
                         </h3>
                         <input type="text" id="searchBar" className="form-control" placeholder="Search Away" onKeyUp={this.search.bind(this)} />
                         {this.state.downloaded ? (
-                            <table className="table table-hover">
+                            <table className="table table-hover table-responsive">
                                 <thead>
                                     <tr>
                                         <th scope="col">Type</th>

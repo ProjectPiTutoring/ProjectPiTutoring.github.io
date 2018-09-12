@@ -55,7 +55,6 @@ class Repository extends Component {
             }
         });
         this.setState({searchResult: map1, searchCounter: searchCounter});
-        console.log(this.state.searchResult.length);
     }
     render() {
         return (

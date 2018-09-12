@@ -70,31 +70,33 @@ class Repository extends Component {
                             </span>
                         </h3>
                         <input type="text" id="searchBar" className="form-control" placeholder="Search Away" onKeyUp={this.search.bind(this)} />
-                        {this.state.downloaded ? (
-                            <table className="table table-hover table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Type</th>
-                                        <th scope="col">Topic</th>
-                                        <th scope="col">Sub-Topic</th>
-                                        <th scope="col">Download File</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        this.state.searchResult[0] != null ? 
-                                        (this.state.searchResult) : 
-                                        (this.state.files)
-                                    }
-                                </tbody>
-                            </table>
-                        ) : (
-                            <div className="loading">
-                                <center>
-                                    <ReactLoading type={'spin'} color={'#222f3e'} />
-                                </center>
-                            </div>
-                        )}
+                        <div className="table-responsive">
+                            {this.state.downloaded ? (
+                                <table className="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Topic</th>
+                                            <th scope="col">Sub-Topic</th>
+                                            <th scope="col">Download File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            this.state.searchResult[0] != null ?
+                                                (this.state.searchResult) :
+                                                (this.state.files)
+                                        }
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className="loading">
+                                    <center>
+                                        <ReactLoading type={'spin'} color={'#222f3e'} />
+                                    </center>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

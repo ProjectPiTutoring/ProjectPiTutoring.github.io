@@ -4,4 +4,10 @@
 }
 div.container {
     margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+.btn-link {
+    font-weight: 300;
+    padding: 0;
+    margin: 0;
 }

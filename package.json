@@ -7,8 +7,7 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-loading": "^2.0.3",
-    "react-scripts": "1.1.4",
-    "typeface-montserrat": "^0.0.54"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

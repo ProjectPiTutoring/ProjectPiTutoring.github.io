@@ -11,12 +11,11 @@ class FolderStructure extends Component {
             whereami: 0,
             type: null,
             topic: null,
-            olderView: false,
-            mainLink: 'https://projectpi.phillytan.xyz'
+            olderView: false
         }
     }
     componentDidMount() {
-        fetch(this.state.mainLink+'/cat').then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/cat').then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
                 return (<button key={item} className="btn btn-primary" onClick={this.selectType.bind(this)} data-type={item}>{item}</button>)
             })
@@ -25,7 +24,7 @@ class FolderStructure extends Component {
     }
     backToStart() {
         this.setState({ type: null, topic: null, downloaded: false, whereami: 0 });
-        fetch(this.state.mainLink+'/cat').then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/cat').then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
                 return (<button key={item} className="btn btn-primary" onClick={this.selectType.bind(this)} data-type={item}>{item}</button>)
             })
@@ -35,7 +34,7 @@ class FolderStructure extends Component {
     selectType(event) {
         let type = event.target.dataset.type;
         this.setState({downloaded: false, topic: null, whereami: 1});
-        fetch(this.state.mainLink+'/cat/' + type).then(results => {return results.json()}).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/cat/' + type).then(results => {return results.json()}).then(data => {
             let html = data.map((item) => {
                 return (<button key={item} className="btn btn-primary" onClick={this.selectTopic.bind(this)} data-topic={item}>{item}</button>)
             })
@@ -45,10 +44,10 @@ class FolderStructure extends Component {
     selectTopic(event) {
         let topic = event.target.dataset.topic;
         this.setState({ downloaded: false, whereami: 2 });
-        fetch(this.state.mainLink+'/cat/' + this.state.type + '/' + topic).then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/cat/' + this.state.type + '/' + topic).then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
-                let link = this.state.mainLink+"/download/" + item.fileCode;
-                return (<a href={link}><button key={item} className="btn btn-primary">{item.subTopic}</button></a>)
+                let link = process.env.REACT_APP_PROJECT_PI_SERVER+"/download/" + item.fileCode;
+                return (<a href={link} key={item}><button className="btn btn-primary">{item.subTopic}</button></a>)
             })
             this.setState({ files: html, downloaded: true, topic: topic });
         });
@@ -79,17 +78,17 @@ class FolderStructure extends Component {
                                     (
                                         this.state.whereami === 1 ?
                                             (<div>
-                                                <ol class="breadcrumb">
-                                                    <li class="breadcrumb-item"><button className="btn btn-link" onClick={this.backToStart.bind(this)}>Project Pi</button></li>
-                                                    <li class="breadcrumb-item active"><button className="btn btn-link" disabled>{this.state.type}</button></li>
+                                                <ol className="breadcrumb">
+                                                    <li className="breadcrumb-item"><button className="btn btn-link" onClick={this.backToStart.bind(this)}>Project Pi</button></li>
+                                                    <li className="breadcrumb-item active"><button className="btn btn-link" disabled>{this.state.type}</button></li>
                                                 </ol>
                                                 <h3>For what topic?</h3>
                                             </div>) :
                                             (<div>
-                                                <ol class="breadcrumb">
-                                                    <li class="breadcrumb-item"><button className="btn btn-link" onClick={this.backToStart.bind(this)}>Project Pi</button></li>
-                                                    <li class="breadcrumb-item"><button className="btn btn-link" onClick={this.selectType.bind(this)} data-type={this.state.type}>{this.state.type}</button></li>
-                                                    <li class="breadcrumb-item active"><button className="btn btn-link" disabled>{this.state.topic}</button></li>
+                                                <ol className="breadcrumb">
+                                                    <li className="breadcrumb-item"><button className="btn btn-link" onClick={this.backToStart.bind(this)}>Project Pi</button></li>
+                                                    <li className="breadcrumb-item"><button className="btn btn-link" onClick={this.selectType.bind(this)} data-type={this.state.type}>{this.state.type}</button></li>
+                                                    <li className="breadcrumb-item active"><button className="btn btn-link" disabled>{this.state.topic}</button></li>
                                                 </ol>
                                                 <h3>Please select a file to download:</h3>
                                             </div>)

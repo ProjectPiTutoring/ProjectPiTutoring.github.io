@@ -14,9 +14,9 @@ class Repository extends Component {
         }
     }
     componentDidMount() {
-        fetch('https://projectpi.phillytan.xyz/files').then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/files').then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
-                let link = "https://projectpi.phillytan.xyz/download/"+item.fileCode;
+                let link = process.env.REACT_APP_PROJECT_PI_SERVER+"/download/"+item.fileCode;
                 return (
                     <tr key={item._id}>
                         <td>{item.type}</td>
@@ -49,7 +49,7 @@ class Repository extends Component {
                         <td>{file.type}</td>
                         <td>{file.topic}</td>
                         <td>{file.subTopic}</td>
-                        <td><a href={"https://projectpi.phillytan.xyz/download/" + file.fileCode}><button className="btn btn-primary">Download File</button></a></td>
+                        <td><a href={process.env.REACT_APP_PROJECT_PI_SERVER+"/download/" + file.fileCode}><button className="btn btn-primary">Download File</button></a></td>
                     </tr>
                 );
             }

@@ -15,3 +15,6 @@ div.footer {
     background-color: #222f3e;
     padding: 2%;
 }
+button.btn-primary {
+    font-size: 20px;
+}

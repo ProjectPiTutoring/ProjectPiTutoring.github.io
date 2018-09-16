@@ -61,8 +61,8 @@ class FolderStructure extends Component {
             <div>
                 {this.state.olderView ? (
                     <div className="container">
-                        <button className="btn btn-secondary" onClick={this.switchView.bind(this)}>Switch to Guided View</button>
                         <Repository />
+                        <button className="btn btn-secondary" onClick={this.switchView.bind(this)}>Go Back</button>
                     </div>
                 ) : (
                     <div className="container">
@@ -97,7 +97,16 @@ class FolderStructure extends Component {
                                 {this.state.files}
                                 <br />
                                 <br />
-                                <button className="btn btn-secondary" onClick={this.switchView.bind(this)}>Switch to table view</button>
+                                {this.state.whereami === 0 ?
+                                    (<div>
+                                    </div>) :
+                                    (
+                                        this.state.whereami === 1 ?
+                                            (<button className="btn btn-secondary" onClick={this.backToStart.bind(this)}>Go Back</button>) :
+                                            (<button className="btn btn-secondary" onClick={this.selectType.bind(this)} data-type={this.state.type}>Go Back</button>)
+                                    )
+                                }
+                                <button className="btn btn-secondary" onClick={this.switchView.bind(this)}>Show All Files/Search</button>
                             </div>
                         ) : (
                                 <div className="loading">

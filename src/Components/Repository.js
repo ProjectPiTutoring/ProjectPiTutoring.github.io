@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 import './Repository.css';
 
 class Repository extends Component {
@@ -58,7 +59,7 @@ class Repository extends Component {
     }
     render() {
         return (
-            <div>
+            <div class="container">
                 <div className="row">
                     <div className="col-sm-12">
                         <h3>Our File Repository: <span className="badge badge-primary">
@@ -98,6 +99,7 @@ class Repository extends Component {
                         </div>
                     </div>
                 </div>
+                <Link to="/"><button className="btn btn-secondary">Go to Main Menu</button></Link>
             </div>
         );
     }

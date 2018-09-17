@@ -9,6 +9,7 @@ class FileStructure extends Component {
         super();
         this.state = {
             files: [],
+            notFound: false,
             downloaded: false,
         }
     }
@@ -16,10 +17,21 @@ class FileStructure extends Component {
         let type = this.props.match.params.type;
         let topic = this.props.match.params.topic;
         fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + type + '/' + topic).then(results => { return results.json() }).then(data => {
-            let html = data.map((item) => {
-                return (<a href={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} key={item}><button className="btn btn-primary"><FontAwesomeIcon icon={faFileAlt} /> {item.subTopic}</button></a>)
-            })
-            this.setState({ files: html, downloaded: true });
+            if (data.length > 0) {
+                let html = data.map((item) => {
+                    return (<a href={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} key={item}><button className="btn btn-primary"><FontAwesomeIcon icon={faFileAlt} /> {item.subTopic}</button></a>)
+                })
+                this.setState({ files: html, downloaded: true });
+            }
+            else {
+                let html = (
+                    <div>
+                        <h3>Not found.</h3>
+                        <p>We are unable to find what are you looking for. Perhaps going back to the homepage might help.</p>
+                    </div>
+                );
+                this.setState({ files: html, notFound: true, downloaded: true });
+            }
         });
     }
     render() {
@@ -38,7 +50,7 @@ class FileStructure extends Component {
                                 <button className="btn btn-link" disabled>{this.props.match.params.topic}</button>
                             </li>
                         </ol>
-                        <h3>Please select a file to download:</h3>
+                        {this.state.notFound === false && (<h3>Please select a file to download:</h3>)}
                         {this.state.files}
                         <br />
                         <br />

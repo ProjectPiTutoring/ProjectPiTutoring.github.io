@@ -9,20 +9,32 @@ class TopicStructure extends Component {
         super();
         this.state = {
             files: [],
+            notFound: false,
             downloaded: false,
         }
     }
     componentDidMount() {
         let type = this.props.match.params.type;
         fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + type).then(results => { return results.json() }).then(data => {
-            let html = data.map((item) => {
-                return (
-                    <Link key={item} to={'/'+type+'/'+item}>
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faFolder} /> {item}</button>
-                    </Link>
+            if (data.length > 0) {
+                let html = data.map((item) => {
+                    return (
+                        <Link key={item} to={'/' + type + '/' + item}>
+                            <button className="btn btn-primary"><FontAwesomeIcon icon={faFolder} /> {item}</button>
+                        </Link>
+                    );
+                })
+                this.setState({ files: html, downloaded: true });
+            }
+            else {
+                let html = (
+                    <div>
+                        <h3>Not found.</h3>
+                        <p>We are unable to find what are you looking for. Perhaps going back to the homepage might help.</p>
+                    </div>
                 );
-            })
-            this.setState({ files: html, downloaded: true });
+                this.setState({ files: html, notFound: true, downloaded: true });
+            }
         });
     }
     render() {
@@ -38,7 +50,7 @@ class TopicStructure extends Component {
                                 <button className="btn btn-link" disabled>{this.props.match.params.type}</button>
                             </li>
                         </ol>
-                        <h3>For what topic?</h3>
+                        {this.state.notFound === false && (<h3>For what topic?</h3>)}
                         {this.state.files}
                         <br />
                         <br />

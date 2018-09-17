@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Header from './Components/Header';
-import FolderStructure from './Components/FolderStructure';
+import FolderStructure from './pages/FolderStructure';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Repository from './Components/Repository';
+import Repository from './pages/Repository';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import './App.css';

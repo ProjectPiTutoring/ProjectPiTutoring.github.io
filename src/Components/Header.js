@@ -8,7 +8,7 @@ class Header extends Component {
             <div className="view">
                 <div className="newJumbotron">
                     <div className="container">
-                        <img src="logo.png" alt="Project Pi Logo" className="logo" />
+                        <img src="/logo.png" alt="Project Pi Logo" className="logo" />
                         <p>Project π combines Mathematics and the accessibility of social media to create a unique learning experience.</p>
                         <p>More files will be uploaded daily! Stay tuned.</p>
                     </div>

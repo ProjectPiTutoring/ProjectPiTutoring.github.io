@@ -59,7 +59,7 @@ class Repository extends Component {
     }
     render() {
         return (
-            <div class="container">
+            <div className="container">
                 <div className="row">
                     <div className="col-sm-12">
                         <h3>Our File Repository: <span className="badge badge-primary">

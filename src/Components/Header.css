@@ -6,3 +6,11 @@ div.newJumbotron {
 div.small {
     padding: 1%;
 }
+nav.bg-dark {
+    background-color: #222f3e !important;
+    color: #fff;
+    padding: 1%;
+}
+nav.bg-dark li a.nav-link {
+    color: #fff !important;
+}

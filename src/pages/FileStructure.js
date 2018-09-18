@@ -14,13 +14,14 @@ class FileStructure extends Component {
         }
     }
     componentDidMount() {
+        let set = this.props.match.params.set;
         let type = this.props.match.params.type;
         let topic = this.props.match.params.topic;
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + type + '/' + topic).then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + set + '/' + type + '/' + topic).then(results => { return results.json() }).then(data => {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Item key={item} to={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} outside={true} icon={faFileAlt} item={item.subTopic} />
+                        <Item key={item._id} to={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} outside={true} icon={faFileAlt} item={item.subTopic} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });
@@ -46,7 +47,10 @@ class FileStructure extends Component {
                                 <Link to="/"><button className="btn btn-link">Project Pi</button></Link>
                             </li>
                             <li className="breadcrumb-item active">
-                                <Link to={'/' + this.props.match.params.type}><button className="btn btn-link">{this.props.match.params.type}</button></Link>
+                                <Link to={'/' + this.props.match.params.set}><button className="btn btn-link">{this.props.match.params.set}</button></Link>
+                            </li>
+                            <li className="breadcrumb-item active">
+                                <Link to={'/' + this.props.match.params.set + '/' + this.props.match.params.type}><button className="btn btn-link">{this.props.match.params.type}</button></Link>
                             </li>
                             <li className="breadcrumb-item active">
                                 <button className="btn btn-link" disabled>{this.props.match.params.topic}</button>
@@ -56,7 +60,7 @@ class FileStructure extends Component {
                         {this.state.files}
                         <br />
                         <br />
-                        <Link to={"/" + this.props.match.params.type}>
+                        <Link to={'/' + this.props.match.params.set + '/' + this.props.match.params.type}>
                             <button className="btn btn-secondary">Go Back</button>
                         </Link>
                         <Link to="/list">

@@ -13,13 +13,25 @@ class TypeStructure extends Component {
         }
     }
     componentDidMount() {
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat').then(results => { return results.json() }).then(data => {
-            let html = data.map((item) => {
-                return (
-                    <Item key={item} to={'/' + item } icon={faFolder} outside={false} item={item} />
+        let set = this.props.match.params.set;
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/'+set).then(results => { return results.json() }).then(data => {
+            if (data.length > 0) {
+                let html = data.map((item) => {
+                    return (
+                        <Item key={item} to={'/' + set + '/' + item} outside={false} icon={faFolder} item={item} />
+                    );
+                })
+                this.setState({ files: html, downloaded: true });
+            }
+            else {
+                let html = (
+                    <div>
+                        <h3>Not found.</h3>
+                        <p>We are unable to find what are you looking for. Perhaps going back to the homepage might help.</p>
+                    </div>
                 );
-            })
-            this.setState({ files: html, downloaded: true });
+                this.setState({ files: html, notFound: true, downloaded: true });
+            }
         });
     }
     render() {
@@ -29,13 +41,19 @@ class TypeStructure extends Component {
                     <div>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item active">
-                                <button className="btn btn-link" disabled>Project Pi</button>
+                                <Link to="/"><button className="btn btn-link">Project Pi</button></Link>
+                            </li>
+                            <li className="breadcrumb-item active">
+                                <button className="btn btn-link" disabled>{this.props.match.params.set}</button>
                             </li>
                         </ol>
-                        <h3>Hi there! What are you looking for?</h3>
+                        <h3>What kind of file are you looking for?</h3>
                         {this.state.files}
                         <br />
                         <br />
+                        <Link to="/">
+                            <button className="btn btn-secondary">Go Back</button>
+                        </Link>
                         <Link to="/list">
                             <button className="btn btn-secondary">Show All Files/Search</button>
                         </Link>

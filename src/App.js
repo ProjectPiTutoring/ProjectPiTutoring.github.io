@@ -8,6 +8,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import './App.css';
 import FileStructure from './pages/FileStructure';
+import SetStructure from './pages/SetStructure';
 
 class App extends Component {
   render() {
@@ -15,13 +16,14 @@ class App extends Component {
       <Router>
         <div className="view">
           <Header />
-          <Route exact path="/" component={TypeStructure} />
+          <Route exact path="/" component={SetStructure} />
           <Switch>
             <Route path="/list" component={Repository} />
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
-            <Route path="/:type/:topic" component={FileStructure} />
-            <Route path="/:type" component={TopicStructure} />
+            <Route path="/:set/:type/:topic" component={FileStructure} />
+            <Route path="/:set/:type" component={TopicStructure} />
+            <Route path="/:set" component={TypeStructure} />
           </Switch>
         </div>
       </Router>

@@ -14,12 +14,13 @@ class TopicStructure extends Component {
         }
     }
     componentDidMount() {
+        let set = this.props.match.params.set;
         let type = this.props.match.params.type;
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + type).then(results => { return results.json() }).then(data => {
+        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + set + "/" + type).then(results => { return results.json() }).then(data => {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Item key={item} to={'/' + type + '/' + item} outside={false} icon={faFolder} item={item} />
+                        <Item key={item} to={'/' + set + '/' + type + '/' + item} outside={false} icon={faFolder} item={item} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });
@@ -45,6 +46,9 @@ class TopicStructure extends Component {
                                 <Link to="/"><button className="btn btn-link">Project Pi</button></Link>
                             </li>
                             <li className="breadcrumb-item active">
+                                <Link to={"/" + this.props.match.params.set}><button className="btn btn-link">{this.props.match.params.set}</button></Link>
+                            </li>
+                            <li className="breadcrumb-item active">
                                 <button className="btn btn-link" disabled>{this.props.match.params.type}</button>
                             </li>
                         </ol>
@@ -52,7 +56,7 @@ class TopicStructure extends Component {
                         {this.state.files}
                         <br />
                         <br />
-                        <Link to="/">
+                        <Link to={"/" + this.props.match.params.set}>
                             <button className="btn btn-secondary">Go Back</button>
                         </Link>
                         <Link to="/list">

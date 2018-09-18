@@ -20,6 +20,7 @@ class Repository extends Component {
                 let link = process.env.REACT_APP_PROJECT_PI_SERVER+"/download/"+item.fileCode;
                 return (
                     <tr key={item._id}>
+                        <td>{item.set}</td>
                         <td>{item.type}</td>
                         <td>{item.topic}</td>
                         <td>{item.subTopic}</td>
@@ -38,15 +39,17 @@ class Repository extends Component {
             return;
         };
         let map1 = this.state.rawFiles.map(file => {
+            if (file.set === undefined) file.set = "";
             if (file.type === undefined) file.type = "";
             if (file.topic === undefined) file.type = "";
             if (file.subTopic === undefined) file.type = "";
-            let tags = (file.type + " " + file.topic + " " + file.subTopic).toLowerCase();
+            let tags = (file.set + " " + file.type + " " + file.topic + " " + file.subTopic).toLowerCase();
             if(!tags.includes(text)) return false;
             else {
                 searchCounter++
                 return (
                     <tr key={file._id}>
+                        <td>{file.set}</td>
                         <td>{file.type}</td>
                         <td>{file.topic}</td>
                         <td>{file.subTopic}</td>
@@ -75,6 +78,7 @@ class Repository extends Component {
                                 <table className="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th scope="col">Set</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">Topic</th>
                                             <th scope="col">Sub-Topic</th>

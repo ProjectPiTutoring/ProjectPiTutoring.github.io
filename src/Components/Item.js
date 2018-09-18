@@ -8,13 +8,13 @@ const Item = ({ to, icon, item, outside }) => {
             {outside === false ? (
                 <Link to={to}>
                     <button className="btn btn-primary">
-                        <FontAwesomeIcon icon={icon} /> {item}
+                        <FontAwesomeIcon icon={icon} /> {item == null ? ('Other') : item}
                     </button>
                 </Link>
             ) : (
                 <a href={ to }>
                     <button className="btn btn-primary">
-                        <FontAwesomeIcon icon={ icon } /> { item }
+                        <FontAwesomeIcon icon={icon} /> {item == null ? ('Other') : item}
                     </button >
                 </a>
             )}

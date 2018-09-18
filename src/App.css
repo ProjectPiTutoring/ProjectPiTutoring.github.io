@@ -7,8 +7,9 @@ img.logo-small {
     width: auto;
 }
 img.logo {
-    height: 64px;
+    max-height: 64px;
     width: auto;
+    max-width: 100%;
     margin-bottom: 2%;
 }
 div.footer {

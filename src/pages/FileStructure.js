@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Item from '../Components/Item';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
@@ -19,7 +19,9 @@ class FileStructure extends Component {
         fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + type + '/' + topic).then(results => { return results.json() }).then(data => {
             if (data.length > 0) {
                 let html = data.map((item) => {
-                    return (<a href={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} key={item}><button className="btn btn-primary"><FontAwesomeIcon icon={faFileAlt} /> {item.subTopic}</button></a>)
+                    return (
+                        <Item key={item} to={process.env.REACT_APP_PROJECT_PI_SERVER + "/download/" + item.fileCode} outside={true} icon={faFileAlt} item={item.subTopic} />
+                    );
                 })
                 this.setState({ files: html, downloaded: true });
             }

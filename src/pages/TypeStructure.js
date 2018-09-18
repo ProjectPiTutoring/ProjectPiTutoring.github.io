@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Item from '../Components/Item';
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
@@ -16,9 +16,7 @@ class TypeStructure extends Component {
         fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat').then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
                 return (
-                    <Link key={item} to={'/'+item}>
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faFolder} /> {item}</button>
-                    </Link>
+                    <Item key={item} to={'/' + item } icon={faFolder} outside={false} item={item} />
                 );
             })
             this.setState({ files: html, downloaded: true });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Item from '../Components/Item';
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 
@@ -19,9 +19,7 @@ class TopicStructure extends Component {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Link key={item} to={'/' + type + '/' + item}>
-                            <button className="btn btn-primary"><FontAwesomeIcon icon={faFolder} /> {item}</button>
-                        </Link>
+                        <Item key={item} to={'/' + type + '/' + item} outside={false} icon={faFolder} item={item} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });

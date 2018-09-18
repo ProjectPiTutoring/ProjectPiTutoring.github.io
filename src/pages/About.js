@@ -2,7 +2,7 @@ import React from 'react';
 
 const About = () => {
     return (
-        <div className="container">
+        <div className="container page">
             <h1>About Us</h1>
             <p>Project π combines Mathematics and the accessibility of social media to create a unique learning experience. We offer various media forms as well as a responsive messaging service in order to ensure quick, efficient assistance for those in need of it.</p>
             <hr />

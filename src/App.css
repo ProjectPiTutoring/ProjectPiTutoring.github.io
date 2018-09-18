@@ -19,3 +19,7 @@ div.footer {
 button.btn-primary {
     font-size: 20px;
 }
+
+div.page p {
+    font-size: 20px;
+}

@@ -3,6 +3,9 @@ div.newJumbotron {
     color: #fff;
     padding: 2.5%;
 }
+div.newJumbotron p {
+    font-size: 20px;
+}
 div.small {
     padding: 1%;
 }
@@ -13,4 +16,5 @@ nav.bg-dark {
 }
 nav.bg-dark li a.nav-link {
     color: #fff !important;
+    font-size: 16px;
 }

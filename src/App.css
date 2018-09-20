@@ -27,3 +27,8 @@ div.page p {
 div.page h1, h3 {
     font-weight: 500;
 }
+
+a h3 {
+    color: #008cba;
+    text-decoration: underline;
+}

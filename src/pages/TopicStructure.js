@@ -3,6 +3,8 @@ import ReactLoading from 'react-loading';
 import Item from '../Components/Item';
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
+import bugsnag from 'bugsnag-js';
+const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 
 class TopicStructure extends Component {
     constructor() {
@@ -11,6 +13,7 @@ class TopicStructure extends Component {
             files: [],
             notFound: false,
             downloaded: false,
+            ping: null
         }
     }
     componentDidMount() {
@@ -34,6 +37,9 @@ class TopicStructure extends Component {
                 );
                 this.setState({ files: html, notFound: true, downloaded: true });
             }
+        }).catch((err) => {
+            bugsnagClient.notify(err);
+            this.setState({ ping: false });
         });
     }
     render() {
@@ -64,9 +70,17 @@ class TopicStructure extends Component {
                         </Link>
                     </div>
                 ) : (
-                        <div className="loading">
-                            <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
-                        </div>
+                        this.state.ping === false ? (
+                            <div>
+                                <h1>An Error Occurred</h1>
+                                <p>Please try again later. Rest assured, our developers will be notified of this issue.</p>
+                                <p>If you have any questions or concerns, please do not hesitate to contact our <a href="https://m.me/ProjectPiTutoring">Facebook Page</a>.</p>
+                            </div>
+                        ) : (
+                                <div className="loading">
+                                    <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
+                                </div>
+                            )
                     )
                 }
             </div>

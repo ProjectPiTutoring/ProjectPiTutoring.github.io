@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactLoading from 'react-loading';
 import { Link } from 'react-router-dom';
 import './Repository.css';
+import bugsnag from 'bugsnag-js';
+const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 
 class Repository extends Component {
     constructor() {
@@ -11,7 +13,8 @@ class Repository extends Component {
             rawFiles: [],
             searchResult: [],
             downloaded: false,
-            searchCounter: 0
+            searchCounter: 0,
+            ping: null
         }
     }
     componentDidMount() {
@@ -29,6 +32,9 @@ class Repository extends Component {
                 )
             })
             this.setState({ files: html, rawFiles: data, downloaded: true });
+        }).catch((err) => {
+            bugsnagClient.notify(err);
+            this.setState({ ping: false });
         });
     }
     search(event) {
@@ -94,12 +100,18 @@ class Repository extends Component {
                                     </tbody>
                                 </table>
                             ) : (
-                                <div className="loading">
-                                    <center>
-                                        <ReactLoading type={'spin'} color={'#222f3e'} />
-                                    </center>
-                                </div>
-                            )}
+                                    this.state.ping === false ? (
+                                        <div>
+                                            <h1>An Error Occurred</h1>
+                                            <p>Please try again later. Rest assured, our developers will be notified of this issue.</p>
+                                            <p>If you have any questions or concerns, please do not hesitate to contact our <a href="https://m.me/ProjectPiTutoring">Facebook Page</a>.</p>
+                                        </div>
+                                    ) : (
+                                            <div className="loading">
+                                                <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
+                                            </div>
+                                        )
+                                )}
                         </div>
                     </div>
                 </div>

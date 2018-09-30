@@ -4,6 +4,10 @@ import "bootswatch/dist/yeti/bootstrap.min.css";
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import bugsnag from 'bugsnag-js';
+import createPlugin from 'bugsnag-react'
+const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
+const ErrorBoundary = bugsnagClient.use(createPlugin(React));
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<ErrorBoundary><App /></ErrorBoundary>, document.getElementById('root'));
 registerServiceWorker();

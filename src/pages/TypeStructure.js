@@ -19,7 +19,7 @@ class TypeStructure extends Component {
         let set = this.props.match.params.set;
         fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/'+set).then(results => { return results.json() }).then(data => {
             if (data.length > 0) {
-                let html = data.map((item) => {
+                let html = (<h3>What kind of file are you looking for?</h3>) + data.map((item) => {
                     return (
                         <Item key={item} to={'/' + set + '/' + item} outside={false} icon={faFolder} item={item} />
                     );
@@ -53,7 +53,6 @@ class TypeStructure extends Component {
                                 <button className="btn btn-link" disabled>{this.props.match.params.set}</button>
                             </li>
                         </ol>
-                        <h3>What kind of file are you looking for?</h3>
                         {this.state.files}
                         <br />
                         <br />

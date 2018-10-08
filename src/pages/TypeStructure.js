@@ -53,7 +53,7 @@ class TypeStructure extends Component {
                                 <button className="btn btn-link" disabled>{this.props.match.params.set}</button>
                             </li>
                         </ol>
-                        {this.state.notFound != true && (<h3>What kind of file are you looking for?</h3>) }
+                        {this.state.notFound !== true && (<h3>What kind of file are you looking for?</h3>) }
                         {this.state.files}
                         <br />
                         <br />

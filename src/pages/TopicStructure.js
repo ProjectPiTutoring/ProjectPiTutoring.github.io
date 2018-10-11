@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import ReactLoading from 'react-loading';
-import Item from '../Components/Item';
+import { ErrorPage, Loading, Item, NotFound } from '../Components';
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
-import bugsnag from 'bugsnag-js';
-const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 
 class TopicStructure extends Component {
     constructor() {
@@ -19,28 +16,20 @@ class TopicStructure extends Component {
     componentDidMount() {
         let set = this.props.match.params.set;
         let type = this.props.match.params.type;
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat/' + set + "/" + type).then(results => { return results.json() }).then(data => {
+        fetch(`${process.env.REACT_APP_PROJECT_PI_SERVER}/cat/${set}/${type}`).then(res => res.json() ).then(data => {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Item key={item} to={'/' + set + '/' + type + '/' + item} outside={false} icon={faFolder} item={item} />
+                        <Item key={item} to={`/${set}/${type}/${item}`} outside={false} icon={faFolder} item={item} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });
             }
             else {
-                let html = (
-                    <div>
-                        <h3>Not found.</h3>
-                        <p>We are unable to find what are you looking for. Perhaps going back to the homepage might help.</p>
-                    </div>
-                );
+                let html = (<NotFound />);
                 this.setState({ files: html, notFound: true, downloaded: true });
             }
-        }).catch((err) => {
-            bugsnagClient.notify(err);
-            this.setState({ ping: false });
-        });
+        }).catch((err) => { this.setState({ ping: false, err }) });
     }
     render() {
         return (
@@ -69,20 +58,7 @@ class TopicStructure extends Component {
                             <button className="btn btn-secondary">Show All Files/Search</button>
                         </Link>
                     </div>
-                ) : (
-                        this.state.ping === false ? (
-                            <div>
-                                <h1>An Error Occurred</h1>
-                                <p>Please try again later. Rest assured, our developers will be notified of this issue.</p>
-                                <p>If you have any questions or concerns, please do not hesitate to contact our <a href="https://m.me/ProjectPiTutoring">Facebook Page</a>.</p>
-                            </div>
-                        ) : (
-                                <div className="loading">
-                                    <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
-                                </div>
-                            )
-                    )
-                }
+                ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
             </div>
         );
     };

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import ReactLoading from 'react-loading';
-import Item from '../Components/Item';
+import { ErrorPage, Item, Loading } from '../Components';
 import { faFolder } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
-import bugsnag from 'bugsnag-js';
-const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 
 class SetStructure extends Component {
     constructor() {
@@ -16,17 +13,14 @@ class SetStructure extends Component {
         }
     }
     componentDidMount() {
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER + '/cat').then(results => { return results.json() }).then(data => {
+        fetch(`${process.env.REACT_APP_PROJECT_PI_SERVER}/cat`).then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
                 return (
-                    <Item key={item} to={'/' + item} icon={faFolder} outside={false} item={item} />
+                    <Item key={item} to={`/${item}`} icon={faFolder} outside={false} item={item} />
                 );
             })
             this.setState({ files: html, downloaded: true });
-        }).catch((err) => {
-            bugsnagClient.notify(err);
-            this.setState({ ping: false });
-        });
+        }).catch((err) => { this.setState({ ping: false, err }) });
     }
     render() {
         return (
@@ -46,20 +40,7 @@ class SetStructure extends Component {
                             <button className="btn btn-secondary">Show All Files/Search</button>
                         </Link>
                     </div>
-                ) : (
-                        this.state.ping === false ? (
-                            <div>
-                                <h1>An Error Occurred</h1>
-                                <p>Please try again later. Rest assured, our developers will be notified of this issue.</p>
-                                <p>If you have any questions or concerns, please do not hesitate to contact our <a href="https://m.me/ProjectPiTutoring">Facebook Page</a>.</p>
-                            </div>
-                        ) : (
-                            <div className="loading">
-                                <center><ReactLoading type={ 'spin' } color={ '#222f3e' } /></center>
-                            </div>
-                        )
-                    )
-                }
+                ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
             </div>
         );
     };

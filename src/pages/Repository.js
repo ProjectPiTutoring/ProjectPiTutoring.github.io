@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import ReactLoading from 'react-loading';
+import { ErrorPage, Loading } from '../Components';
 import { Link } from 'react-router-dom';
 import './Repository.css';
-import bugsnag from 'bugsnag-js';
-const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 
 class Repository extends Component {
     constructor() {
@@ -18,24 +16,20 @@ class Repository extends Component {
         }
     }
     componentDidMount() {
-        fetch(process.env.REACT_APP_PROJECT_PI_SERVER+'/files').then(results => { return results.json() }).then(data => {
+        fetch(`${process.env.REACT_APP_PROJECT_PI_SERVER}/files`).then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
-                let link = process.env.REACT_APP_PROJECT_PI_SERVER+"/download/"+item.fileCode;
                 return (
                     <tr key={item._id}>
                         <td>{item.set}</td>
                         <td>{item.type}</td>
                         <td>{item.topic}</td>
                         <td>{item.subTopic}</td>
-                        <td><a href={link}><button className="btn btn-primary">Download File</button></a></td>
+                        <td><a href={`${process.env.REACT_APP_PROJECT_PI_SERVER}/download/${item.fileCode}`}><button className="btn btn-primary">Download File</button></a></td>
                     </tr>
                 )
             })
             this.setState({ files: html, rawFiles: data, downloaded: true });
-        }).catch((err) => {
-            bugsnagClient.notify(err);
-            this.setState({ ping: false });
-        });
+        }).catch((err) => { this.setState({ ping: false, err }) });
     }
     search(event) {
         let searchCounter = 0;
@@ -99,19 +93,7 @@ class Repository extends Component {
                                         }
                                     </tbody>
                                 </table>
-                            ) : (
-                                    this.state.ping === false ? (
-                                        <div>
-                                            <h1>An Error Occurred</h1>
-                                            <p>Please try again later. Rest assured, our developers will be notified of this issue.</p>
-                                            <p>If you have any questions or concerns, please do not hesitate to contact our <a href="https://m.me/ProjectPiTutoring">Facebook Page</a>.</p>
-                                        </div>
-                                    ) : (
-                                            <div className="loading">
-                                                <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
-                                            </div>
-                                        )
-                                )}
+                            ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
                         </div>
                     </div>
                 </div>

@@ -6512,6 +6512,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-detect-offline@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-detect-offline/-/react-detect-offline-2.1.2.tgz#1827b1db88c8ae40ca70dfd995dfb0aff702126b"
+  integrity sha512-wO0CWabGz2/vb6QS7gueFVOdvlHY4xGdi7v3at9FMNmUB94ZNHAZcIPsOx5JSVlZajKH1I/6mFX23xgwrWCjkA==
+
 react-dev-utils@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.1.tgz#1f396e161fe44b595db1b186a40067289bf06613"

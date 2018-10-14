@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Header } from './Components';
+import { Header } from "./Components";
 import { TypeStructure, TopicStructure, Repository, About, Contact, FileStructure, SetStructure,  } from './pages';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.css';
+import { FacebookProvider, CustomChat } from "react-facebook";
+import './Lato.css';
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -19,6 +21,9 @@ class App extends Component {
             <Route path="/:set/:type" component={TopicStructure} />
             <Route path="/:set" component={TypeStructure} />
           </Switch>
+          <FacebookProvider appId="1363704637070550">
+            <CustomChat pageId="1938346206438831" themeColor="#222f3e" />
+          </FacebookProvider>
         </div>
       </Router>
     );

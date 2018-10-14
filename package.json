@@ -18,7 +18,7 @@
     "react-ga": "^2.5.3",
     "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "^2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,5 +31,11 @@
   "homepage": "https://projectpitutoring.github.io/",
   "devDependencies": {
     "gh-pages": "^1.2.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';
 import ReactGA from 'react-ga';
@@ -18,4 +17,3 @@ ReactDOM.render(
 );
 ReactGA.initialize("UA-45781991-6");
 ReactGA.pageview(window.location.pathname + window.location.search);
-registerServiceWorker();

@@ -12,7 +12,7 @@
     <meta property="og:url" content="https://projectpitutoring.github.io/" />
     <meta property="og:type" content="website" />
     <script type="text/javascript">
-    if (`%NODE_ENV%` === "production") window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () {}
+    if (`%NODE_ENV%` === "production" && window.__REACT_DEVTOOLS_GLOBAL_HOOK__) window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () {}
       (function(l) {
         if (l.search) {
           var q = {};

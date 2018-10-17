@@ -5,3 +5,5 @@ export { default as About } from './About';
 export { default as Contact } from './Contact';
 export { default as FileStructure } from './FileStructure';
 export { default as SetStructure } from './SetStructure';
+export { default as Quiz } from './Quiz';
+export { default as QuizView } from './QuizView';

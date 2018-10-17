@@ -1,0 +1,13 @@
+div.choice {
+    transition: 0.3s;
+}
+
+div.choice:hover {
+    color: #FFF;
+    background-color: #222f3e;
+}
+
+div.selected {
+    background-color: #008cba;
+    color: #FFF;
+}

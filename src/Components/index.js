@@ -3,3 +3,7 @@ export { default as Header } from './Header';
 export { default as Item } from './Item';
 export { default as NotFound } from './NotFound';
 export { default as Loading } from './Loading';
+export { default as BetaWindow } from './BetaWindow';
+export { default as Choice } from './Choice';
+export { default as Question } from './Question';
+export { default as QuizElement } from './Quiz';

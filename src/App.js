@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from "./Components";
-import { TypeStructure, TopicStructure, Repository, About, Contact, FileStructure, SetStructure,  } from './pages';
+import { TypeStructure, TopicStructure, Repository, About, Contact, FileStructure, SetStructure, Quiz, QuizView } from './pages';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { FacebookProvider, CustomChat } from "react-facebook";
 import './Lato.css';
@@ -14,6 +14,8 @@ class App extends Component {
           <Header />
           <Route exact path="/" component={SetStructure} />
           <Switch>
+            <Route path="/quiz/:id" component={QuizView} />
+            <Route exact path="/quiz" component={Quiz} />
             <Route exact path="/list" component={Repository} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />

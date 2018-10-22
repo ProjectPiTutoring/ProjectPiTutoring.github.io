@@ -1,45 +1,44 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import './Header.css';
 import Logo from "./logo.png";
+import { Menu, Segment, Container } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
 
 class Header extends Component {
     render() {
         return(
-            <div className="view">
-                <div className="newJumbotron">
-                    <div className="container">
+            <React.Fragment>
+                <Segment inverted style={{backgroundColor: '#222f3e',margin:0,borderRadius:0}}>
+                    <Container>
                         <img src={Logo} alt="Project Pi Logo" className="logo" />
-                        <p>Project π combines Mathematics and the accessibility of social media to create a unique learning experience.</p>
-                        <p>More files will be uploaded daily! Stay tuned.</p>
-                    </div>
-                </div>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                    <p></p>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div className="collapse navbar-collapse" id="navbarColor02">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/"}>Home</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/quiz"}>Quizzes <span className="badge badge-warning">BETA</span></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/about"}>About</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={"/contact"}>Contact Us</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
+                        <p style={{fontSize: '20px' }}>Project π combines Mathematics and the accessibility of social media to create a unique learning experience.</p>
+                        <p style={{fontSize: '20px' }}>More files will be uploaded daily! Stay tuned.</p>
+                    </Container>
+                    <Menu inverted pointing secondary style={{padding: '1%', fontSize: '16px',border:'none'}}>
+                        <Menu.Item 
+                            name='Home' 
+                            onClick={() => { this.props.history.push('/') }}
+                            active={this.props.history.location.pathname === '/'} 
+                        />
+                        <Menu.Item
+                            name='Quizzes'
+                            onClick={() => { this.props.history.push('/quiz') }}
+                            active={this.props.history.location.pathname === '/quiz'} 
+                        />
+                        <Menu.Item
+                            name='About'
+                            onClick={() => { this.props.history.push('/about') }}
+                            active={this.props.history.location.pathname === '/about'} 
+                        />
+                        <Menu.Item
+                            name='Contact Us'
+                            onClick={() => { this.props.history.push('/contact') }}
+                            active={this.props.history.location.pathname === '/contact'}
+                        />
+                    </Menu>
+                </Segment>
+            </React.Fragment>
         );
     }
 }
 
-export default Header;
+export default withRouter(Header);

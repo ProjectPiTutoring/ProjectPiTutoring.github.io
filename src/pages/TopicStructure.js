@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ErrorPage, Loading, Item, NotFound } from '../Components';
-import { faFolder } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom';
+import { ErrorPage, Loading, Item, NotFound, Breadcrumb } from '../Components';
+import { Button, Container } from 'semantic-ui-react';
 
 class TopicStructure extends Component {
     constructor() {
@@ -20,7 +19,7 @@ class TopicStructure extends Component {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Item key={item} to={`/${set}/${type}/${item}`} outside={false} icon={faFolder} item={item} />
+                        <Item key={item} to={`/${set}/${type}/${item}`} outside={false} item={item} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });
@@ -33,33 +32,30 @@ class TopicStructure extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 {this.state.downloaded ? (
-                    <div>
-                        <ol className="breadcrumb">
-                            <li className="breadcrumb-item active">
-                                <Link to="/"><button className="btn btn-link">Project Pi</button></Link>
-                            </li>
-                            <li className="breadcrumb-item active">
-                                <Link to={"/" + this.props.match.params.set}><button className="btn btn-link">{this.props.match.params.set}</button></Link>
-                            </li>
-                            <li className="breadcrumb-item active">
-                                <button className="btn btn-link" disabled>{this.props.match.params.type}</button>
-                            </li>
-                        </ol>
+                    <React.Fragment>
+                        <Breadcrumb set={this.props.match.params.set} type={this.props.match.params.type} />
                         {this.state.notFound === false && (<h3>For what topic?</h3>)}
-                        {this.state.files}
-                        <br />
-                        <br />
-                        <Link to={"/" + this.props.match.params.set}>
-                            <button className="btn btn-secondary">Go Back</button>
-                        </Link>
-                        <Link to="/list">
-                            <button className="btn btn-secondary">Show All Files/Search</button>
-                        </Link>
-                    </div>
+                        <Button.Group vertical labeled icon fluid>
+                            {this.state.files}
+                            <Button 
+                                icon="arrow left"
+                                content="Go Back"
+                                onClick={() => { this.props.history.push(`/${this.props.match.params.set}`) }}
+                                style={{textAlign: 'left'}} 
+                                color="brown"
+                            />
+                            <Button 
+                                icon="list"
+                                content="Show All Files/Search"
+                                onClick={() => { this.props.history.push('/list') }}
+                                style={{textAlign: 'left'}} 
+                            />
+                        </Button.Group>
+                    </React.Fragment>
                 ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
-            </div>
+            </Container>
         );
     };
 }

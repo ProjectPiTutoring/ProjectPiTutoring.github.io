@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { ErrorPage, Item, Loading } from '../Components';
-import { faFolder } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom';
+import { ErrorPage, Item, Loading, Breadcrumb } from '../Components';
+import { Button, Container } from 'semantic-ui-react';
 
 class SetStructure extends Component {
     constructor() {
@@ -16,7 +15,7 @@ class SetStructure extends Component {
         fetch(`${process.env.REACT_APP_PROJECT_PI_SERVER}/cat`).then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
                 return (
-                    <Item key={item} to={`/${item}`} icon={faFolder} outside={false} item={item} />
+                    <Item key={item} to={`/${item}`} outside={false} item={item} />
                 );
             })
             this.setState({ files: html, downloaded: true });
@@ -24,24 +23,23 @@ class SetStructure extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 {this.state.downloaded ? (
-                    <div>
-                        <ol className="breadcrumb">
-                            <li className="breadcrumb-item active">
-                                <button className="btn btn-link" disabled>Project Pi</button>
-                            </li>
-                        </ol>
+                    <React.Fragment>
+                        <Breadcrumb />
                         <h3>Hi there! What are you looking for?</h3>
-                        {this.state.files}
-                        <br />
-                        <br />
-                        <Link to="/list">
-                            <button className="btn btn-secondary">Show All Files/Search</button>
-                        </Link>
-                    </div>
+                        <Button.Group vertical labeled icon fluid>
+                            {this.state.files}
+                            <Button 
+                                icon="list"
+                                content="Show All Files/Search"
+                                onClick={() => { this.props.history.push('/list') }}
+                                style={{textAlign: 'left'}} 
+                            />
+                        </Button.Group>
+                    </React.Fragment>
                 ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
-            </div>
+            </Container>
         );
     };
 }

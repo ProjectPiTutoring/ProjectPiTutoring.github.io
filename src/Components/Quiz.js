@@ -1,18 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { Card, Button, Icon } from 'semantic-ui-react';
 
-const Quiz = ({ quiz }) => {
+const Quiz = withRouter(({ quiz, history }) => {
     return (
-        <div className="card border-primary mb-3">
-            <div className="card-header">{quiz.topic}</div>
-            <div className="card-body">
-                <h4 className="card-title">{quiz.name}</h4>
-                <p className="card-text">{quiz.description}</p>
-                <p className="card-text">{quiz.questions.length} {quiz.questions.length !== 1 ? "questions" : "question"} </p>
-                <Link to={"/quiz/" + quiz._id} className="btn btn-primary">Take Practice Quiz</Link>
-            </div>
-        </div>
+        <Card>
+            <Card.Content>
+                <Card.Header>{quiz.name}</Card.Header>
+                <Card.Meta>{quiz.topic}</Card.Meta>
+                <Card.Description>{quiz.description}</Card.Description>
+                <Icon name='unordered list' /> {quiz.questions.length} {quiz.questions.length !== 1 ? "questions" : "question"}
+            </Card.Content>
+            <Card.Content extra>
+                <Button basic color='blue' fluid onClick={() => { history.push(`/quiz/${quiz._id}`) }}>
+                    Take Practice Quiz
+                </Button>
+            </Card.Content>
+        </Card>
     );
-}
+});
 
 export default Quiz;

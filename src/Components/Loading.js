@@ -1,11 +1,14 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
+import { Container, Icon, Header } from 'semantic-ui-react';
 
 const Loading = () => {
     return (
-        <div className="loading">
-            <center><ReactLoading type={'spin'} color={'#222f3e'} /></center>
-        </div>
+        <Container style={{padding: '5%'}}>
+            <Header as='h2' icon textAlign='center'>
+                <Icon name='circle notch' loading />
+                <Header.Content>Loading...</Header.Content>
+            </Header>
+        </Container>
     );
 }
 

@@ -4,8 +4,7 @@ import bugsnag from 'bugsnag-js';
 import createPlugin from 'bugsnag-react';
 import ReactGA from 'react-ga';
 import { render } from 'react-snapshot';
-import "./scss/Yeti.css";
-import "bootstrap/js/dist/collapse";
+import 'semantic-ui-css/semantic.min.css';
 const bugsnagClient = bugsnag(process.env.REACT_APP_BUGSNAG_TOKEN);
 const ErrorBoundary = bugsnagClient.use(createPlugin(React));
 

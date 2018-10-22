@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Loading, BetaWindow, QuizElement } from '../Components';
+import { Container, Card } from 'semantic-ui-react';
 
 class Quiz extends Component {
     constructor() {
@@ -14,15 +15,17 @@ class Quiz extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 {this.state.downloaded ? (
-                    <div>
+                    <React.Fragment>
                         <BetaWindow />
                         <h1>Please select a quiz to try:</h1>
-                        { this.state.html }
-                    </div>
+                        <Card.Group>
+                            { this.state.html }
+                        </Card.Group>
+                    </React.Fragment>
                 ) : (<Loading />)}
-            </div>
+            </Container>
         );
     };
 }

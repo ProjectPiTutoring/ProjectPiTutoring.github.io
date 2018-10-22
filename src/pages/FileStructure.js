@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { faFileAlt } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom';
-import { Loading, NotFound, ErrorPage, Item } from '../Components';
+import { Loading, NotFound, ErrorPage, Item, Breadcrumb } from '../Components';
+import { Button, Container } from 'semantic-ui-react';
 
 class FileStructure extends Component {
     constructor() {
@@ -21,7 +20,7 @@ class FileStructure extends Component {
             if (data.length > 0) {
                 let html = data.map((item) => {
                     return (
-                        <Item key={item._id} to={`${process.env.REACT_APP_PROJECT_PI_SERVER}/download/${item.fileCode}`} outside={true} icon={faFileAlt} item={item.subTopic} />
+                        <Item key={item._id} to={`${process.env.REACT_APP_PROJECT_PI_SERVER}/download/${item.fileCode}`} outside={true} item={item.subTopic} />
                     );
                 })
                 this.setState({ files: html, downloaded: true });
@@ -34,36 +33,30 @@ class FileStructure extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 {this.state.downloaded ? (
-                    <div>
-                        <ol className="breadcrumb">
-                            <li className="breadcrumb-item active">
-                                <Link to="/"><button className="btn btn-link">Project Pi</button></Link>
-                            </li>
-                            <li className="breadcrumb-item active">
-                                <Link to={'/' + this.props.match.params.set}><button className="btn btn-link">{this.props.match.params.set}</button></Link>
-                            </li>
-                            <li className="breadcrumb-item active">
-                                <Link to={'/' + this.props.match.params.set + '/' + this.props.match.params.type}><button className="btn btn-link">{this.props.match.params.type}</button></Link>
-                            </li>
-                            <li className="breadcrumb-item active">
-                                <button className="btn btn-link" disabled>{this.props.match.params.topic}</button>
-                            </li>
-                        </ol>
+                    <React.Fragment>
+                        <Breadcrumb set={this.props.match.params.set} type={this.props.match.params.type} topic={this.props.match.params.topic} />
                         {this.state.notFound === false && (<h3>Please select a file to download:</h3>)}
-                        {this.state.files}
-                        <br />
-                        <br />
-                        <Link to={'/' + this.props.match.params.set + '/' + this.props.match.params.type}>
-                            <button className="btn btn-secondary">Go Back</button>
-                        </Link>
-                        <Link to="/list">
-                            <button className="btn btn-secondary">Show All Files/Search</button>
-                        </Link>
-                    </div>
+                        <Button.Group vertical labeled icon fluid>
+                            {this.state.files}
+                            <Button 
+                                icon="arrow left"
+                                content="Go Back"
+                                onClick={() => { this.props.history.push(`/${this.props.match.params.set}/${this.props.match.params.type}`) }}
+                                style={{textAlign: 'left'}} 
+                                color="brown"
+                            />
+                            <Button 
+                                icon="list"
+                                content="Show All Files/Search"
+                                onClick={() => { this.props.history.push('/list') }}
+                                style={{textAlign: 'left'}} 
+                            />
+                        </Button.Group>
+                    </React.Fragment>
                 ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
-            </div>
+            </Container>
         );
     };
 }

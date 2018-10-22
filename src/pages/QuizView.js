@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Loading, BetaWindow, NotFound, Question } from '../Components';
+import { Button, Container, Card, Divider } from 'semantic-ui-react';
 
 class QuizView extends Component {
     constructor() {
@@ -61,13 +62,15 @@ class QuizView extends Component {
                 if (this.state.quiz.questions[l].c3c === true) c = this.state.quiz.questions[l].c3;
                 if (this.state.quiz.questions[l].c4c === true) c = this.state.quiz.questions[l].c4;
                 return (
-                    <div className="card border-success mb-3" key={l}>
-                        <div className="card-header">Question {l+1}</div>
-                        <div className="card-body">
-                            <h4 className="card-title">{this.state.quiz.questions[l].question}</h4>
-                            <p className="card-text"><b>Correct Answer:</b> {c}</p>
-                        </div>
-                    </div>
+                    <Card fluid color="green">
+                        <Card.Content>
+                            <Card.Header>Question {l+1}</Card.Header>
+                            <Card.Description>
+                                <h4>{this.state.quiz.questions[l].question}</h4>
+                                <p><b>Correct Answer:</b> {c}</p>
+                            </Card.Description>
+                        </Card.Content>
+                    </Card>
                 );
             }
             else {
@@ -84,26 +87,30 @@ class QuizView extends Component {
                     if (this.state.selected[l].c4 === true) w = this.state.quiz.questions[l].c4;
                     if (w == null) w = "No response";
                     return (
-                        <div className="card border-danger mb-3" key={l}>
-                            <div className="card-header">Question {l+1}</div>
-                            <div className="card-body">
-                                <h4 className="card-title">{this.state.quiz.questions[l].question}</h4>
-                                <p className="card-text"><b>Correct Answer:</b> {c}</p>
-                                <p className="card-text"><b>You Answered:</b> {w}</p>
-                            </div>
-                        </div>
+                        <Card fluid color="red">
+                            <Card.Content>
+                                <Card.Header>Question {l+1}</Card.Header>
+                                <Card.Description>
+                                    <h4>{this.state.quiz.questions[l].question}</h4>
+                                    <p><b>Correct Answer:</b> {c}</p>
+                                    <p><b>You Answered:</b> {w}</p>
+                                </Card.Description>
+                            </Card.Content>
+                        </Card>
                     );
                 }
                 else {
                     return (
-                        <div className="card border-danger mb-3" key={l}>
-                            <div className="card-header">Question {l+1}</div>
-                            <div className="card-body">
-                                <h4 className="card-title">{this.state.quiz.questions[l].question}</h4>
-                                <p className="card-text"><b>Correct Answer:</b> {c}</p>
-                                <p className="card-text"><b>You Answered:</b> No Response</p>
-                            </div>
-                        </div>
+                        <Card fluid color="red">
+                            <Card.Content>
+                                <Card.Header>Question {l+1}</Card.Header>
+                                <Card.Description>
+                                    <h4>{this.state.quiz.questions[l].question}</h4>
+                                    <p><b>Correct Answer:</b> {c}</p>
+                                    <p><b>You Answered:</b> No Response</p>
+                                </Card.Description>
+                            </Card.Content>
+                        </Card>
                     );
                 }
             }
@@ -123,11 +130,35 @@ class QuizView extends Component {
     setSwitchBar = () => {
         let a = this.state.quiz.questions.map((e, l) => {
             if (l === this.state.currentQuestion) {
-                return (<button key={l} onClick={() => this.switchQuestion(l)} type="button" style={{ fontSize: '.9375rem' }} className="btn btn-info">Question {l+1}</button>);
+                return (
+                    <Button 
+                        key={l}
+                        onClick={() => this.switchQuestion(l)}
+                        active
+                        content={`Question ${l+1}`}
+                        color="blue"
+                    />
+                );
             }
             else if (this.state.selected[l] !== undefined && ((this.state.selected[l].c1 === true) || (this.state.selected[l].c2 === true) || (this.state.selected[l].c3 === true) || (this.state.selected[l].c4 === true))) {
-                return (<button key={l} onClick={() => this.switchQuestion(l)} type="button" style={{ fontSize: '.9375rem' }} className="btn btn-primary">Question {l+1}</button>);
-            } else { return (<button key={l} onClick={() => this.switchQuestion(l)} type="button" style={{ fontSize: '.9375rem' }} className="btn btn-secondary">Question {l+1}</button>); }
+                return (
+                    <Button 
+                        key={l}
+                        onClick={() => this.switchQuestion(l)}
+                        content={`Question ${l+1}`}
+                        color="teal"
+                    />
+                );
+            } 
+            else { 
+                return (
+                    <Button 
+                        key={l}
+                        onClick={() => this.switchQuestion(l)}
+                        content={`Question ${l+1}`}
+                    />
+                ); 
+            }
         });
         this.setState({ switchBar: a });
     }
@@ -141,30 +172,32 @@ class QuizView extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <Container>
                 <BetaWindow />
                 {this.state.downloaded ? (
                     this.state.quiz !== false ? (
-                        <div>
+                        <React.Fragment>
                             {!this.state.completed && (
-                                <div className="btn-toolbar" role="toolbar">
-                                    <div className="btn-group mr-2" role="group">
-                                        {this.state.switchBar}
-                                    </div>
-                                </div>
+                                <Button.Group>
+                                    {this.state.switchBar}
+                                </Button.Group>
                             )}
                             <h1>{this.state.quiz.name}</h1>
                             <h3>{this.state.quiz.topic}</h3>
                             <p>{this.state.quiz.description}</p>
-                            <hr />
+                            <Divider />
                             {this.state.completed ? (
                                 this.state.results !== null ? (
-                                    <div>
+                                    <React.Fragment>
                                         <p>You got {this.state.correct} out of {this.state.questionCount} questions correct.</p>
-                                        <hr />
-                                        {this.state.resultsHTML}
-                                        <button className="btn btn-primary" onClick={this.retake}>Retake Quiz</button>
-                                    </div>
+                                        <Divider />
+                                        <Container fluid>
+                                            <Card.Group>
+                                                {this.state.resultsHTML}
+                                            </Card.Group>
+                                        </Container>
+                                        <Button color="orange" labelPosition='left' icon="repeat" onClick={this.retake} content="Retake Quiz" />
+                                    </React.Fragment>
                                 ) : (<Loading />)
                             ) : (
                                     <Question
@@ -179,11 +212,11 @@ class QuizView extends Component {
                                         submit={this.submit}
                                     />
                                 )}
-                        </div>
+                        </React.Fragment>
                     ) : (<NotFound />)
                 ) : (<Loading />)
                 }
-            </div>
+            </Container>
         );
     };
 }

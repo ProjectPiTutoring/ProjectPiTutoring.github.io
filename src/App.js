@@ -3,11 +3,8 @@ import { Header } from "./Components";
 import { TypeStructure, TopicStructure, Repository, About, Contact, FileStructure, SetStructure, Quiz, QuizView } from './pages';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { FacebookProvider, CustomChat } from "react-facebook";
-import registerServiceWorker from './registerServiceWorker';
-import { unregister } from './registerServiceWorker';
-import SweetAlert from 'sweetalert-react';
-import 'sweetalert/dist/sweetalert.css';
-import './Lato.css';
+import registerServiceWorker, { unregister } from './registerServiceWorker';
+import { Modal, Button, Icon } from 'semantic-ui-react';
 import "./App.css";
 
 class App extends Component {
@@ -25,13 +22,16 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <div className="view">
-                    <SweetAlert
-                        show={!this.state.latest}
-                        title="Update Available"
-                        text="A new update is available for the Project Pi Website. Please reload the page to continue."
-                        onConfirm={() => window.location.reload()}
-                    />
+                <React.Fragment>
+                    <Modal open={!this.state.latest}>
+                        <Modal.Header><Icon name="warning sign" />Update Available</Modal.Header>
+                        <Modal.Content>
+                            <Modal.Description>
+                                <p>A new update is available for the Project Pi Website. Please reload the page to continue.</p>
+                                <Button icon="refresh" labelPosition='left' onClick={() => window.location.reload()} content="Reload Project Pi Website" />
+                            </Modal.Description>
+                        </Modal.Content>
+                    </Modal>
                     <Header />
                     <Route exact path="/" component={SetStructure} />
                     <Switch>
@@ -47,7 +47,7 @@ class App extends Component {
                     <FacebookProvider appId="1363704637070550">
                         <CustomChat pageId="1938346206438831" themeColor="#222f3e" />
                     </FacebookProvider>
-                </div>
+                </React.Fragment>
             </Router>
         );
     }

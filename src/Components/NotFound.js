@@ -2,10 +2,10 @@ import React from 'react';
 
 const NotFound = () => {
     return (
-        <div>
+        <React.Fragment>
             <h3>Not found.</h3>
             <p>We are unable to find what are you looking for. Perhaps going back to the homepage might help.</p>
-        </div>
+        </React.Fragment>
     );
 }
 

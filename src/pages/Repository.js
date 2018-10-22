@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import { ErrorPage, Loading } from '../Components';
 import { Link } from 'react-router-dom';
-import './Repository.css';
+import { Button, Table, Icon, Input, Label, Container } from 'semantic-ui-react';
+
+const TableRow = ({ item }) => {
+    return(
+        <Table.Row>
+            <Table.Cell>{item.set}</Table.Cell>
+            <Table.Cell>{item.type}</Table.Cell>
+            <Table.Cell>{item.topic}</Table.Cell>
+            <Table.Cell>{item.subTopic}</Table.Cell>
+            <Table.Cell>
+                <a href={`${process.env.REACT_APP_PROJECT_PI_SERVER}/download/${item.fileCode}`}>
+                    <Button icon primary labelPosition='left'>
+                        <Icon name='download' />
+                        Download {item.type}
+                    </Button>
+                </a>
+            </Table.Cell>
+        </Table.Row>
+        );
+};
 
 class Repository extends Component {
     constructor() {
@@ -18,15 +37,7 @@ class Repository extends Component {
     componentDidMount() {
         fetch(`${process.env.REACT_APP_PROJECT_PI_SERVER}/files`).then(results => { return results.json() }).then(data => {
             let html = data.map((item) => {
-                return (
-                    <tr key={item._id}>
-                        <td>{item.set}</td>
-                        <td>{item.type}</td>
-                        <td>{item.topic}</td>
-                        <td>{item.subTopic}</td>
-                        <td><a href={`${process.env.REACT_APP_PROJECT_PI_SERVER}/download/${item.fileCode}`}><button className="btn btn-primary">Download File</button></a></td>
-                    </tr>
-                )
+                return (<TableRow  key={item._id} item={item} />);
             })
             this.setState({ files: html, rawFiles: data, downloaded: true });
         }).catch((err) => { this.setState({ ping: false, err }) });
@@ -47,58 +58,48 @@ class Repository extends Component {
             if(!tags.includes(text)) return false;
             else {
                 searchCounter++
-                return (
-                    <tr key={file._id}>
-                        <td>{file.set}</td>
-                        <td>{file.type}</td>
-                        <td>{file.topic}</td>
-                        <td>{file.subTopic}</td>
-                        <td><a href={process.env.REACT_APP_PROJECT_PI_SERVER+"/download/" + file.fileCode}><button className="btn btn-primary">Download File</button></a></td>
-                    </tr>
-                );
+                return (<TableRow key={file._id} item={file} />);
             }
         });
         this.setState({searchResult: map1, searchCounter: searchCounter});
     }
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <h3>Our File Repository: <span className="badge badge-primary">
-                                {this.state.searchResult[0] != null 
-                                    ? this.state.searchCounter 
-                                    : this.state.files.length
-                                } Files Found
-                            </span>
-                        </h3>
-                        <input type="text" id="searchBar" className="form-control" placeholder="Search Away" onKeyUp={this.search.bind(this)} />
-                        <div className="table-responsive">
-                            {this.state.downloaded ? (
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Set</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Topic</th>
-                                            <th scope="col">Sub-Topic</th>
-                                            <th scope="col">Download File</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.searchResult[0] != null ?
-                                                (this.state.searchResult) :
-                                                (this.state.files)
-                                        }
-                                    </tbody>
-                                </table>
-                            ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
-                        </div>
-                    </div>
-                </div>
-                <Link to="/"><button className="btn btn-secondary">Go to Main Menu</button></Link>
-            </div>
+            <Container>
+                <h3>Our File Repository: 
+                    <Label color="teal" horizontal> 
+                        {this.state.searchResult[0] != null 
+                            ? this.state.searchCounter 
+                            : this.state.files.length
+                        } Files Found 
+                    </Label>
+                </h3>
+                <Input iconPosition='left' style={{width:'100%'}} placeholder='Search Away' onKeyUp={this.search.bind(this)}>
+                    <Icon name='search' />
+                    <input />
+                </Input>
+                {this.state.downloaded ? (
+                    <Table>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell>Set</Table.HeaderCell>
+                                <Table.HeaderCell>Type</Table.HeaderCell>
+                                <Table.HeaderCell>Topic</Table.HeaderCell>
+                                <Table.HeaderCell>Sub-Topic</Table.HeaderCell>
+                                <Table.HeaderCell>Download File</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {
+                                this.state.searchResult[0] != null ?
+                                    (this.state.searchResult) :
+                                    (this.state.files)
+                            }
+                        </Table.Body>
+                    </Table>
+                ) : (this.state.ping === false ? (<ErrorPage err={this.state.err} />) : (<Loading />))}
+                <Link to="/"><Button>Go to Main Menu</Button></Link>
+            </Container>
         );
     }
 }

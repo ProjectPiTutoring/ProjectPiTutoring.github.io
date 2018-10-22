@@ -1,25 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Item.css';
-const Item = ({ to, icon, item, outside }) => {
-    return (
-        <div className="item">
-            {outside === false ? (
-                <Link to={to}>
-                    <button className="btn btn-primary">
-                        <FontAwesomeIcon icon={icon} /> {item == null ? ('Other') : item}
-                    </button>
-                </Link>
-            ) : (
-                <a href={ to }>
-                    <button className="btn btn-primary">
-                        <FontAwesomeIcon icon={icon} /> {item == null ? ('Other') : item}
-                    </button >
-                </a>
-            )}
-        </div>
+import { withRouter } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
+
+const Item = withRouter(({ to, item, outside, history }) => {
+    return(
+        <Button 
+            icon={outside === false ? "folder" : "file pdf"} 
+            content={item == null ? ('Other') : item} 
+            primary
+            onClick={() => {
+                if (outside === false) history.push(to)
+                else window.open(to);
+            }}
+            style={{textAlign: 'left'}} 
+        />
     );
-}
+});
  
 export default Item;

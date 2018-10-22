@@ -7,3 +7,4 @@ export { default as BetaWindow } from './BetaWindow';
 export { default as Choice } from './Choice';
 export { default as Question } from './Question';
 export { default as QuizElement } from './Quiz';
+export { default as Breadcrumb } from './BreadcrumbElement';

@@ -3,7 +3,7 @@ import { Header } from "./Components";
 import { TypeStructure, TopicStructure, Repository, About, Contact, FileStructure, SetStructure, Quiz, QuizView } from './pages';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { FacebookProvider, CustomChat } from "react-facebook";
-import registerServiceWorker, { unregister } from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 import { Modal, Button, Icon } from 'semantic-ui-react';
 import "./App.css";
 
@@ -12,12 +12,12 @@ class App extends Component {
         super();
         this.state = {latest: true};
     }
-    updateNeeded() {
-        unregister()
-        this.setState({latest: false})
-    }
     componentWillMount() {
-        registerServiceWorker(this.updateNeeded.bind(this));
+        serviceWorker.unregister({
+            onUpdate: (reg) => {
+                this.setState({latest: false})
+            }
+        });
     }
     render() {
         return (

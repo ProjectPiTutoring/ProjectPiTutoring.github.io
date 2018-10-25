@@ -5,11 +5,13 @@
   "dependencies": {
     "bugsnag-js": "^4.7.3",
     "bugsnag-react": "^1.1.1",
+    "katex": "^0.10.0-rc.1",
     "react": "^16.4.2",
     "react-detect-offline": "^2.1.2",
     "react-dom": "^16.4.2",
     "react-facebook": "^6.0.14",
     "react-ga": "^2.5.3",
+    "react-latex": "^1.2.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.0.4",

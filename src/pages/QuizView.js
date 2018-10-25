@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Loading, BetaWindow, NotFound, Question } from '../Components';
 import { Button, Container, Card, Divider } from 'semantic-ui-react';
+import 'katex/dist/katex.min.css';
 
 class QuizView extends Component {
     constructor() {
